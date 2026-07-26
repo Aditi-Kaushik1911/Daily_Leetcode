@@ -1,0 +1,32 @@
+class Solution:
+    def isPossible(self, arr, k, max_pages):
+        students_required = 1
+        current_sum = 0
+        
+        for pages in arr:
+            if current_sum + pages > max_pages:
+                students_required += 1
+                current_sum = pages
+            else:
+                current_sum += pages
+                
+        return students_required <= k
+
+    def findPages(self, arr, k):
+        if k > len(arr):
+            return -1
+        
+        low = max(arr)
+        high = sum(arr)
+        ans = -1
+        
+        while low <= high:
+            mid = low + (high - low) // 2
+            
+            if self.isPossible(arr, k, mid):
+                ans = mid
+                high = mid - 1
+            else:
+                low = mid + 1
+                
+        return ans
