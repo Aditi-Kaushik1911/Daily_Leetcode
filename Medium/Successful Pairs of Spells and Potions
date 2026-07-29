@@ -1,0 +1,15 @@
+import bisect
+class Solution:
+  def successfulPairs(
+      self, spells: list[int], potions: list[int], success: int
+  ) -> list[int]:
+    potions.sort()
+    m = len(potions)
+    pairs = []
+    for spell in spells:
+      min_potion = (success + spell - 1) // spell
+      idx = bisect.bisect_left(potions, min_potion)
+      pairs.append(m - idx)
+
+    return pairs
+        
